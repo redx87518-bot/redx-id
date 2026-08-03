@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.RedxIDCard" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/gold</item>
+        <item name="colorPrimaryVariant">@color/green_pk</item>
+        <item name="colorOnPrimary">@color/bg_dark</item>
+        <item name="colorSecondary">@color/green_ng</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:colorBackground">@color/bg_dark</item>
+        <item name="android:windowBackground">@color/bg_dark</item>
+        <item name="actionBarStyle">@style/RedxActionBar</item>
+    </style>
+
+    <style name="RedxActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="background">@color/surface</item>
+        <item name="titleTextStyle">@style/RedxActionBarTitle</item>
+    </style>
+
+    <style name="RedxActionBarTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/gold</item>
+    </style>
+</resources>
