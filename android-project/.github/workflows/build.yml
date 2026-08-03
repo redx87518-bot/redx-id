@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build Debug APK
+    name: Build Release APK
     runs-on: ubuntu-latest
 
     steps:
@@ -34,17 +34,37 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace
+      - name: Generate release keystore
+        run: |
+          keytool -genkeypair \
+            -alias redxkey \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -keystore app/release.keystore \
+            -storepass redxidcard \
+            -keypass redxidcard \
+            -dname "CN=RedxIDCard, OU=Redx, O=Redx, L=Lagos, S=Lagos, C=NG" \
+            -noprompt
+          echo "Keystore generated ✓"
+
+      - name: Build Release APK
+        run: ./gradlew assembleRelease --stacktrace
+
+      - name: Rename APK
+        run: |
+          mkdir -p output
+          cp app/build/outputs/apk/release/app-release.apk output/RedxIDCard.apk
+          ls -lh output/
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: redx-id-card-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: RedxIDCard-APK
+          path: output/RedxIDCard.apk
           retention-days: 30
 
-      - name: Show APK info
+      - name: Show build summary
         run: |
-          ls -lh app/build/outputs/apk/debug/
-          echo "✅ APK build complete!"
+          echo "✅ Build complete!"
+          echo "APK size: $(du -h output/RedxIDCard.apk | cut -f1)"
