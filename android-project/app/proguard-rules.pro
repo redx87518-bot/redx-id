@@ -1,12 +1,12 @@
-# Keep the app's own classes
+# Keep all app classes
 -keep class com.redx.idcard.** { *; }
 
-# Keep Bitmap and Canvas APIs used for image generation
+# Keep Android graphics APIs used for image generation
 -keep class android.graphics.** { *; }
 
 # Keep FileProvider
 -keep class androidx.core.content.FileProvider { *; }
 
-# Suppress warnings for unused classes stripped by R8
+# Suppress R8 warnings
 -dontwarn kotlin.**
 -dontwarn kotlinx.**
